@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MLBB Tournament</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;600;700&display=swap');
+        
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .mlbb-gradient {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1428 100%);
+        }
+
+        .accent-glow {
+            box-shadow: 0 0 30px rgba(138, 43, 226, 0.3);
+        }
+
+        .button-glow:hover {
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.5);
+        }
+
+        .team-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid #8a2be2;
+        }
+
+        .team-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.2);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .input-glow {
+            border: 1.5px solid #8a2be2;
+            background: rgba(138, 43, 226, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .input-glow:focus {
+            border-color: #ff007f;
+            background: rgba(255, 0, 127, 0.1);
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
+        }
+    </style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body class="h-full m-0 p-0 mlbb-gradient text-white overflow-auto">
+  <div class="w-full h-full overflow-auto"><!-- Header -->
+   <header class="w-full bg-black bg-opacity-50 border-b border-purple-600 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+     <div>
+      <h1 class="orbitron text-3xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">MLBB TOURNAMENT</h1>
+      <p class="text-xs text-purple-300 mt-1">Mobile Legends: Bang Bang Competitive Series</p>
+     </div>
+     <div class="text-right text-sm">
+      <p class="text-purple-300" id="teams-count">Teams Registered: 0</p>
+     </div>
+    </div>
+   </header><!-- Main Content -->
+   <main class="w-full max-w-7xl mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8"><!-- Registration Form -->
+     <div class="lg:col-span-2">
+      <div class="bg-white bg-opacity-5 backdrop-blur border border-purple-500 border-opacity-30 rounded-lg p-8 animate-slide-in">
+       <h2 class="orbitron text-2xl font-bold text-purple-300 mb-6 flex items-center"><span class="w-2 h-8 bg-gradient-to-b from-purple-500 to-pink-500 mr-3"></span> Register Your Team</h2>
+       <form id="registration-form" class="space-y-6"><!-- Team Name -->
+        <div><label for="team_name" class="block text-sm font-semibold text-purple-300 mb-2">Team Name *</label> <input type="text" id="team_name" required placeholder="Enter your team name" class="w-full px-4 py-3 rounded-lg input-glow text-white placeholder-gray-500 focus:outline-none">
+        </div><!-- Captain Info -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <div><label for="captain_name" class="block text-sm font-semibold text-purple-300 mb-2">Captain Name *</label> <input type="text" id="captain_name" required placeholder="Full name" class="w-full px-4 py-3 rounded-lg input-glow text-white placeholder-gray-500 focus:outline-none">
+         </div>
+         <div><label for="captain_email" class="block text-sm font-semibold text-purple-300 mb-2">Email *</label> <input type="email" id="captain_email" required placeholder="captain@example.com" class="w-full px-4 py-3 rounded-lg input-glow text-white placeholder-gray-500 focus:outline-none">
+         </div>
+        </div>
+        <div><label for="captain_phone" class="block text-sm font-semibold text-purple-300 mb-2">Phone Number *</label> <input type="tel" id="captain_phone" required placeholder="+1 (555) 000-0000" class="w-full px-4 py-3 rounded-lg input-glow text-white placeholder-gray-500 focus:outline-none">
+        </div><!-- Team Members -->
+        <div class="border-t border-purple-500 border-opacity-20 pt-6">
+         <h3 class="text-sm font-semibold text-purple-300 mb-4">Team Members (4 more required)</h3>
+         <div class="space-y-3"><input type="text" id="member_2" placeholder="Member 2 Name" class="w-full px-4 py-3 rounded-lg input-glow text-white placeholder-gray-500 focus:outline-none"> <input type="text" id="member_3" placeholder="Member 3 Name" class="w-full px-4 py-3 rounded-lg input-glow text-white placeholder-gray-500 focus:outline-none"> <input type="text" id="member_4" placeholder="Member 4 Name" class="w-full px-4 py-3 rounded-lg input-glow text-white placeholder-gray-500 focus:outline-none"> <input type="text" id="member_5" placeholder="Member 5 Name" class="w-full px-4 py-3 rounded-lg input-glow text-white placeholder-gray-500 focus:outline-none">
+         </div>
+        </div><!-- Submit Button --> <button type="submit" id="submit-btn" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 px-4 rounded-lg button-glow transition-all duration-300 orbitron uppercase tracking-wider"> Register Team </button> <!-- Loading state -->
+        <div id="loading-state" class="hidden text-center">
+         <div class="inline-block animate-spin">
+          <div class="w-6 h-6 border-3 border-purple-500 border-t-pink-500 rounded-full"></div>
+         </div>
+         <p class="text-sm text-purple-300 mt-2">Registering team...</p>
+        </div><!-- Error message -->
+        <div id="error-message" class="hidden bg-red-900 bg-opacity-30 border border-red-500 text-red-200 px-4 py-3 rounded-lg text-sm"></div><!-- Success message -->
+        <div id="success-message" class="hidden bg-green-900 bg-opacity-30 border border-green-500 text-green-200 px-4 py-3 rounded-lg text-sm"></div>
+       </form>
+      </div><!-- Tournament Info Card -->
+      <div class="bg-white bg-opacity-5 backdrop-blur border border-purple-500 border-opacity-30 rounded-lg p-6 mt-8">
+       <h3 class="orbitron text-xl font-bold text-purple-300 mb-4">Tournament Details</h3>
+       <div class="grid grid-cols-2 gap-4 text-sm">
+        <div>
+         <p class="text-purple-400 text-xs uppercase tracking-wider">Date</p>
+         <p id="detail-date" class="text-lg font-semibold text-white mt-1">January 15, 2024</p>
+        </div>
+        <div>
+         <p class="text-purple-400 text-xs uppercase tracking-wider">Prize Pool</p>
+         <p id="detail-prize" class="text-lg font-semibold text-white mt-1">$10,000</p>
+        </div>
+        <div>
+         <p class="text-purple-400 text-xs uppercase tracking-wider">Max Teams</p>
+         <p id="detail-max" class="text-lg font-semibold text-white mt-1">32</p>
+        </div>
+        <div>
+         <p class="text-purple-400 text-xs uppercase tracking-wider">Format</p>
+         <p class="text-lg font-semibold text-white mt-1">5v5</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Registered Teams Sidebar -->
+     <div class="lg:col-span-1">
+      <div class="bg-white bg-opacity-5 backdrop-blur border border-purple-500 border-opacity-30 rounded-lg p-6 sticky top-24 animate-slide-in" style="animation-delay: 0.2s;">
+       <h2 class="orbitron text-xl font-bold text-purple-300 mb-4 flex items-center"><span class="w-2 h-6 bg-gradient-to-b from-purple-500 to-pink-500 mr-2"></span> Registered Teams</h2>
+       <div id="teams-list" class="space-y-3 max-h-96 overflow-y-auto pr-2">
+        <p class="text-gray-400 text-sm text-center py-8">No teams registered yet</p>
+       </div><!-- Limit Warning -->
+       <div id="limit-warning" class="hidden mt-6 bg-red-900 bg-opacity-30 border border-red-500 text-red-200 px-3 py-3 rounded-lg text-xs">
+        Registration is now closed - Maximum teams reached!
+       </div><!-- Stats Card -->
+       <div class="mt-6 bg-gradient-to-br from-purple-900 to-pink-900 bg-opacity-30 rounded-lg p-4 border border-purple-500 border-opacity-20">
+        <div class="text-center">
+         <p class="text-3xl font-bold text-purple-300" id="stats-count">0</p>
+         <p class="text-xs text-purple-300 uppercase tracking-wider mt-1">Teams Registered</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </main><!-- Footer -->
+   <footer class="w-full border-t border-purple-600 bg-black bg-opacity-50 mt-12 py-6">
+    <div class="max-w-7xl mx-auto px-4 text-center text-sm text-purple-300">
+     <p>© 2024 MLBB Tournament Series | Official Registration Platform</p>
+    </div>
+   </footer>
+  </div>
+  <script>
+        let currentTeams = [];
+        let config = {
+            tournament_title: "MLBB TOURNAMENT",
+            tournament_date: "January 15, 2024",
+            prize_pool: "$10,000",
+            max_teams: "32"
+        };
+
+        const defaultConfig = {
+            tournament_title: "MLBB TOURNAMENT",
+            tournament_date: "January 15, 2024",
+            prize_pool: "$10,000",
+            max_teams: "32"
+        };
+
+        const dataHandler = {
+            onDataChanged(data) {
+                currentTeams = data;
+                updateTeamsList();
+                updateStats();
+                checkTeamLimit();
+            }
+        };
+
+        async function initializeSDK() {
+            if (window.elementSdk) {
+                await window.elementSdk.init({
+                    defaultConfig,
+                    onConfigChange: updateConfigDisplay,
+                    mapToCapabilities: () => ({
+                        recolorables: [],
+                        borderables: [],
+                        fontEditable: undefined,
+                        fontSizeable: undefined
+                    }),
+                    mapToEditPanelValues: () => new Map([
+                        ["tournament_title", config.tournament_title],
+                        ["tournament_date", config.tournament_date],
+                        ["prize_pool", config.prize_pool],
+                        ["max_teams", config.max_teams]
+                    ])
+                });
+            }
+
+            if (window.dataSdk) {
+                const result = await window.dataSdk.init(dataHandler);
+                if (!result.isOk) {
+                    console.error("Failed to initialize data SDK");
+                }
+            }
+        }
+
+        function updateConfigDisplay(newConfig) {
+            config = { ...defaultConfig, ...newConfig };
+            document.getElementById('detail-date').textContent = config.tournament_date;
+            document.getElementById('detail-prize').textContent = config.prize_pool;
+            document.getElementById('detail-max').textContent = config.max_teams;
+        }
+
+        function updateTeamsList() {
+            const teamsList = document.getElementById('teams-list');
+            
+            if (currentTeams.length === 0) {
+                teamsList.innerHTML = '<p class="text-gray-400 text-sm text-center py-8">No teams registered yet</p>';
+                return;
+            }
+
+            teamsList.innerHTML = currentTeams.map(team => `
+                <div class="team-card bg-white bg-opacity-5 rounded-lg p-3 hover:bg-opacity-10 transition-all">
+                    <p class="font-semibold text-purple-300 text-sm">${team.team_name}</p>
+                    <p class="text-xs text-gray-400 mt-1">Captain: ${team.captain_name}</p>
+                    <div class="flex gap-1 mt-2 flex-wrap">
+                        ${[team.member_2, team.member_3, team.member_4, team.member_5].filter(m => m).map(member => 
+                            `<span class="inline-block text-xs bg-purple-900 text-purple-200 px-2 py-1 rounded">${member}</span>`
+                        ).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateStats() {
+            const count = currentTeams.length;
+            document.getElementById('teams-count').textContent = `Teams Registered: ${count}`;
+            document.getElementById('stats-count').textContent = count;
+        }
+
+        function checkTeamLimit() {
+            const maxTeams = parseInt(config.max_teams) || 32;
+            const limitWarning = document.getElementById('limit-warning');
+            const submitBtn = document.getElementById('submit-btn');
+            
+            if (currentTeams.length >= maxTeams) {
+                limitWarning.classList.remove('hidden');
+                submitBtn.disabled = true;
+                submitBtn.opacity = 0.5;
+            } else {
+                limitWarning.classList.add('hidden');
+                submitBtn.disabled = false;
+                submitBtn.opacity = 1;
+            }
+        }
+
+        document.getElementById('registration-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const maxTeams = parseInt(config.max_teams) || 32;
+            if (currentTeams.length >= maxTeams) {
+                showError('Maximum teams reached! Registration is closed.');
+                return;
+            }
+
+            const formData = {
+                team_name: document.getElementById('team_name').value.trim(),
+                captain_name: document.getElementById('captain_name').value.trim(),
+                captain_email: document.getElementById('captain_email').value.trim(),
+                captain_phone: document.getElementById('captain_phone').value.trim(),
+                member_2: document.getElementById('member_2').value.trim(),
+                member_3: document.getElementById('member_3').value.trim(),
+                member_4: document.getElementById('member_4').value.trim(),
+                member_5: document.getElementById('member_5').value.trim(),
+                registered_at: new Date().toISOString()
+            };
+
+            if (!formData.team_name || !formData.captain_name || !formData.captain_email || !formData.captain_phone) {
+                showError('Please fill in all required fields!');
+                return;
+            }
+
+            showLoading();
+            const result = await window.dataSdk.create(formData);
+
+            if (result.isOk) {
+                document.getElementById('registration-form').reset();
+                showSuccess('Team registered successfully!');
+                setTimeout(() => clearMessages(), 3000);
+            } else {
+                showError('Failed to register team. Please try again.');
+            }
+        });
+
+        function showLoading() {
+            document.getElementById('loading-state').classList.remove('hidden');
+            document.getElementById('submit-btn').disabled = true;
+        }
+
+        function showError(message) {
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('submit-btn').disabled = false;
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+        }
+
+        function showSuccess(message) {
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('submit-btn').disabled = false;
+            const successDiv = document.getElementById('success-message');
+            successDiv.textContent = message;
+            successDiv.classList.remove('hidden');
+        }
+
+        function clearMessages() {
+            document.getElementById('error-message').classList.add('hidden');
+            document.getElementById('success-message').classList.add('hidden');
+        }
+
+        // Initialize on page load
+        initializeSDK();
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d204a8f8453ba05',t:'MTc3MTc4MjI2NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
